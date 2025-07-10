@@ -10,10 +10,16 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: [
+      'http://localhost:5173',
+      'https://www.jaisal.blog',  
+      "https://portfolio-sigma-nine-27.vercel.app",      
+      'https://jaisal.blog'             
+    ],
     credentials: true,
   })
 );
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
