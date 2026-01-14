@@ -1,5 +1,7 @@
 const Project = require("../models/Project");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 exports.getProjectById = async (req, res) => {
   try {
@@ -8,6 +10,15 @@ exports.getProjectById = async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
     res.json(project);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+exports.getProjects = async (req, res) => {
+  try {
+    const projects = await Project.find();
+    res.json(projects);
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
@@ -23,39 +34,26 @@ exports.createProject = async (req, res) => {
   }
 };
 
-
-
 exports.sendContactEmail = async (req, res) => {
   const { name, email, location, position, message } = req.body;
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: process.env.MY_EMAIL,
-      pass: process.env.MY_EMAIL_PASSWORD,
-    },
-    // Force IPv4 to prevent IPv6 connection issues on Render
-    family: 4,
-  });
-
-  const mailOptions = {
-    from: email,
-    to: process.env.MY_EMAIL,
-    subject: `New Contact Message from ${name}`,
-    text: `
-Name: ${name}
-Email: ${email}
-Location: ${location}
-Position: ${position}
-Message: ${message}
-    `,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Email sent successfully" });
+    const data = await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: process.env.MY_EMAIL, // Your email
+      reply_to: email, // Reply to the person who filled the form
+      subject: `New Contact Message from ${name}`,
+      html: `
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Location:</strong> ${location}</p>
+        <p><strong>Position:</strong> ${position}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `,
+    });
+
+    res.status(200).json({ message: "Email sent successfully", data });
   } catch (error) {
     console.error("Error sending email:", error);
     res.status(500).json({ error: "Failed to send email" });
