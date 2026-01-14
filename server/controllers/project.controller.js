@@ -30,12 +30,14 @@ exports.sendContactEmail = async (req, res) => {
 
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false, // true for 465, false for other ports
     auth: {
       user: process.env.MY_EMAIL,
       pass: process.env.MY_EMAIL_PASSWORD,
     },
+    // Force IPv4 to prevent IPv6 connection issues on Render
+    family: 4,
   });
 
   const mailOptions = {
