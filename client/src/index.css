@@ -70,3 +70,11 @@
   clip-path: polygon(0 0, 0% 100%, 25% 75%, 50% 100%, 75% 75%, 100% 100%, 100% 0);
 }
 
+
+html, body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+}

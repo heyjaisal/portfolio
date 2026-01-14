@@ -7,7 +7,7 @@ export default function Home() {
     
       <section className="grid grid-cols-1 md:grid-cols-2 shrink-0 md:grow-0 min-h-[200px] md:min-h-[25vh] items-center">
         <div className="flex items-center justify-center px-6">
-          <div className="text-white text-3xl md:text-5xl lg:text-5xl font-poppins font-semibold leading-tight space-y-2 text-left w-full max-w-2xl mb-10 mt-5">
+          <div className="text-white text-3xl md:text-5xl lg:text-5xl font-poppins font-semibold leading-tight space-y-2 text-left w-full max-w-2xl mb-10 mt-8">
             <p className="text-yellow-300">Designer,</p>
             <p>skill collector,</p>
             <p>backend builder.</p>

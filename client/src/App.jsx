@@ -11,7 +11,7 @@ import CustomCursor from "./Components/Cursor";
 export default function App() {
   return (
     <>
-    <div className="no-scroll">
+    <div className="no-scrollbar">
  <CustomCursor />
       <Navbar />
       <Routes >

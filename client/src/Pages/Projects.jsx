@@ -36,7 +36,7 @@ const Projects = () => {
           <div className="lg:ml-[10rem] lg:max-w-[50%]">
             <h1 className="font-semibold font-poppins text-black text-[clamp(2.5rem,6vw,4.5rem)] lg:text-[clamp(3.5rem,6.5vw,5.5rem)]">
               <div>Selected</div>
-              <div className="mt-[-1.6rem] sm:mt-[-1.9rem] md:mt-[-2.3rem] lg:mt-[-3.0rem]">
+              <div className="mt-[-1.6rem] sm:mt-[-1.9rem] md:mt-[-2.3rem] lg:mt-[-3.0rem] text-yellow-300">
                 works
               </div>
             </h1>

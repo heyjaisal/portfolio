@@ -8,8 +8,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const isDarkTheme = location.pathname === "/" || location.pathname === "/contact";
 
-  const textColorClass = isHome ? "text-white" : "text-black";
+  const textColorClass = isDarkTheme ? "text-white" : "text-black";
 
   return (
     <nav className={`font-mono text-sm tracking-wide w-full z-50 fixed top-0 bg-transparent backdrop-blur-sm transition-all duration-300 ${textColorClass}`}>
@@ -27,7 +28,7 @@ export default function Navbar() {
             <span className="text-yellow-400 text-xs">●</span>
             <Link
               to="/"
-              className={`font-semibold ${isHome ? "text-white" : "text-black"} hover:text-yellow-300 transition`}
+              className={`font-semibold ${isDarkTheme ? "text-white" : "text-black"} hover:text-yellow-300 transition`}
             >
               JAISAL M
             </Link>
@@ -76,7 +77,7 @@ export default function Navbar() {
       </div>
 
       {isOpen && (
-        <div className={`md:hidden absolute top-16 left-0 w-full backdrop-blur-3xl px-4 pb-4 pt-6 space-y-4 z-40 ${isHome ? "bg-black/90 text-white" : "bg-gray-500 text-white"}  `}>
+        <div className={`md:hidden absolute top-16 left-0 w-full backdrop-blur-3xl px-4 pb-4 pt-6 space-y-4 z-40 ${isDarkTheme ? "bg-black/90 text-white" : "bg-gray-500 text-white"}  `}>
           <Link to="/projects" onClick={() => setIsOpen(false)} className="block hover:text-yellow-300">
             SELECTED WORKS
           </Link>
