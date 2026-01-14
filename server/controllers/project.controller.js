@@ -29,7 +29,9 @@ exports.sendContactEmail = async (req, res) => {
   const { name, email, location, position, message } = req.body;
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.MY_EMAIL,
       pass: process.env.MY_EMAIL_PASSWORD,
