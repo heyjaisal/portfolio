@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const ProjectRoutes = require('./routes/project.routes');
 const contactRoute = require('./routes/contact.routes');
+const homeCardRoutes = require('./routes/homecard.routes');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/projects", ProjectRoutes);
 app.use("/api/contact", contactRoute);
+app.use("/api/home-cards", homeCardRoutes);
 
 const startServer = async () => {
   try {
