@@ -1,7 +1,17 @@
+import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import axiosInstance from "../utils/axios";
 
 export default function Home() {
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.get("/home-cards")
+      .then((res) => setCards(res.data))
+      .catch((err) => console.error("Error fetching home cards:", err));
+  }, []);
+
   return (
     <div className="w-full bg-black text-white font-inter md:h-screen overflow-y-auto flex flex-col pt-20">
     
@@ -17,26 +27,9 @@ export default function Home() {
       </section>
       <section className="bg-grid px-4 py-8 md:py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              title: "Frontend Designs",
-              img: "https://miro.medium.com/v2/resize:fit:700/1*gsxg36ifLTJQjOpD5J5snA.gif",
-            },
-            {
-              title: "Backend Architecture",
-              img: "https://miro.medium.com/v2/resize:fit:1400/1*H0CTa4XarcrKNQsmoeFrzg.gif",
-            },
-            {
-              title: "Real time Web app",
-              img: "https://i.pinimg.com/originals/ae/41/9e/ae419e15dcbb88cda185e381c30da438.gif",
-            },
-            {
-              title: "Dashboard Designs",
-              img: "https://mir-s3-cdn-cf.behance.net/project_modules/hd/0e527894016125.5e74805477d6f.gif",
-            },
-          ].map((item, index) => (
+          {cards.map((item, index) => (
             <div
-              key={index}
+              key={item._id || index}
               className="group space-y-2 rounded transform transition hover:text-yellow-300 duration-300 ease-in-out hover:scale-105"
             >
              <Link to="/projects">

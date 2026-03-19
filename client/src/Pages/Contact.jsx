@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axiosInstance from "../utils/axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ContactForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,21 +13,44 @@ export default function ContactForm() {
   });
 
   const [status, setStatus] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: null });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
     setStatus("Sending...");
 
     try {
-      await axiosInstance.post("/contact", formData);
-      setStatus("Message sent successfully!");
+      const response = await axiosInstance.post("/contact", formData);
+      
+      if (response.data?.role === "admin") {
+        localStorage.setItem("adminToken", response.data.token);
+        navigate("/admin");
+      } else {
+        setStatus("Message sent successfully!");
+      }
+      
       setFormData({ name: "", email: "", location: "", position: "", message: "" });
     } catch (error) {
-      setStatus("Failed to send. Try again.");
+      if (error.response?.data?.error === "fill all the input") {
+        setStatus("Please fill in required fields.");
+        const newErrors = {};
+        if (!formData.name.trim()) newErrors.name = "Name is required";
+        if (!formData.email.trim()) newErrors.email = "Email is required";
+        if (!formData.message.trim()) newErrors.message = "Message is required";
+        setErrors(newErrors);
+      } else if (error.response?.data?.error) {
+        setStatus(error.response.data.error);
+      } else {
+        setStatus("Failed to send. Try again.");
+      }
     }
   };
 
@@ -67,26 +92,26 @@ export default function ContactForm() {
         {/* 📬 Contact Form */}
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="group">
+            <div className="group relative">
               <input
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Your Name"
-                required
-                className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-yellow-300 transition-colors placeholder:text-gray-700 text-white"
+                className={`w-full bg-transparent border-b py-4 text-xl focus:outline-none transition-colors placeholder:text-gray-700 text-white ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-white/20 focus:border-yellow-300'}`}
               />
+              {errors.name && <span className="text-red-500 text-xs absolute -bottom-5 left-0">{errors.name}</span>}
             </div>
-            <div className="group">
+            <div className="group relative">
               <input
                 name="email"
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Your Email"
-                required
-                className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-yellow-300 transition-colors placeholder:text-gray-700 text-white"
+                className={`w-full bg-transparent border-b py-4 text-xl focus:outline-none transition-colors placeholder:text-gray-700 text-white ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-white/20 focus:border-yellow-300'}`}
               />
+              {errors.email && <span className="text-red-500 text-xs absolute -bottom-5 left-0">{errors.email}</span>}
             </div>
           </div>
           
@@ -111,16 +136,16 @@ export default function ContactForm() {
             </div>
           </div>
 
-          <div className="group pt-6">
+          <div className="group pt-6 relative">
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
               placeholder="Tell me about your project..."
               rows="4"
-              required
-              className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-yellow-300 transition-colors placeholder:text-gray-700 text-white resize-none"
+              className={`w-full bg-transparent border-b py-4 text-xl focus:outline-none transition-colors placeholder:text-gray-700 text-white resize-none ${errors.message ? 'border-red-500 focus:border-red-500' : 'border-white/20 focus:border-yellow-300'}`}
             />
+            {errors.message && <span className="text-red-500 text-xs absolute -bottom-4 left-0">{errors.message}</span>}
           </div>
 
           <div className="pt-8 flex items-center justify-between">

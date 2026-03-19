@@ -8,7 +8,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const isDarkTheme = location.pathname === "/" || location.pathname === "/contact";
+  const isDarkTheme = location.pathname === "/" || location.pathname === "/contact" || location.pathname === "/admin";
 
   const textColorClass = isDarkTheme ? "text-white" : "text-black";
 

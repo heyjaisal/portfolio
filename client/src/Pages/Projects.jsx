@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { IoMdArrowDown } from "react-icons/io";
 import folderImage from "../assets/folder.png";
-import HomePage from "../assets/better.png";
+import axiosInstance from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 
 const ProjectBlock = ({ imgSrc, year, title, subtitle, tags, number, projectId }) => {
@@ -8,7 +9,7 @@ const ProjectBlock = ({ imgSrc, year, title, subtitle, tags, number, projectId }
 
   return (
     <div
-      onClick={() => navigate(`/projects/1`)}
+      onClick={() => navigate(`/projects/${projectId}`)}
       className="w-full cursor-pointer overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-lg"
     >
       <img src={imgSrc} alt={title} className="w-full h-auto object-cover" />
@@ -29,6 +30,14 @@ const ProjectBlock = ({ imgSrc, year, title, subtitle, tags, number, projectId }
 };
 
 const Projects = () => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.get("/projects")
+      .then((res) => setProjects(res.data))
+      .catch((err) => console.error("Error fetching projects:", err));
+  }, []);
+
   return (
     <div className="w-full font-inter relative z-20 overflow-x-hidden">
       <div className="relative z-30 bg-white min-h-[200vh]">
@@ -65,42 +74,29 @@ const Projects = () => {
         <hr className="border-t border-gray-300 mx-10 sm:mx-16 md:mx-20 my-4" />
 
         <div className="w-full px-6 sm:px-12 md:px-20 py-10 space-y-12">
-          <ProjectBlock
-            imgSrc={HomePage}
-            year="2024"
-            title="Travela"
-            tags="Web,Property Booking and ticket sales"
-            number="01"
-          />
+          {projects.length > 0 && (
+            <ProjectBlock
+              key={projects[0]._id}
+              projectId={projects[0]._id}
+              imgSrc={projects[0].imgSrc}
+              year={projects[0].year}
+              title={projects[0].title}
+              tags={projects[0].tags}
+              number={projects[0].number}
+            />
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ProjectBlock
-              imgSrc="https://cdn.prod.website-files.com/63fc977c14aaea404dce4439/66bdcab91eef9ee357861375_64818db88bd88038b6bd3597_fc9612c134338b06b150a6599201fff543b4f881-1600x1200.jpeg"
-              year="2024"
-              title="Professional dashboard"
-              tags="Web,Admin Dashboard"
-              number="02"
-            />
-            <ProjectBlock
-              imgSrc="https://cdn.dribbble.com/userupload/16056790/file/original-a9e6c209f61bde1e578be46a78024652.png?resize=752x&vertical=center"
-              year="2024"
-              title="Property Listing"
-              tags="Web, Air Bnb Clone"
-              number="03"
-            />
-            <ProjectBlock
-              imgSrc="https://mir-s3-cdn-cf.behance.net/project_modules/1400/c9101f103493929.5f4e7a99b6d88.png"
-              year="2025"
-              title="Real time chat App"
-              tags="Web,Using Socket.io and WRTC"
-              number="04"
-            />
-            <ProjectBlock
-              imgSrc="https://cdn.prod.website-files.com/6243c3bb3b5a1852803d0c7f/67817a660086c4363aa7e94d_648ca6a5eef93e51ca68d331_scribe-blog-template.jpeg"
-              year="2025"
-              title="Blog Post"
-              tags="Web, Medium Blog Clone"
-              number="05"
-            />
+            {projects.slice(1).map((p) => (
+              <ProjectBlock
+                key={p._id}
+                projectId={p._id}
+                imgSrc={p.imgSrc}
+                year={p.year}
+                title={p.title}
+                tags={p.tags}
+                number={p.number}
+              />
+            ))}
           </div>
           
         </div>

@@ -6,6 +6,7 @@ import About from "./main/About";
 import Contact from "./Pages/Contact";
 import ProjectDetils from "./Pages/ProjectDetils";
 import CustomCursor from "./Components/Cursor";
+import AdminDashboard from "./Pages/AdminDashboard";
 
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/projects/:id" element={<ProjectDetils />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </div>
      
