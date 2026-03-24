@@ -66,17 +66,25 @@ export default function AdminDashboard() {
     // Clean up empty lines from the arrays before saving
     const payload = {
       ...editingProject,
-      features: editingProject.features?.filter(f => f.trim() !== '') || [],
-      techStack: editingProject.techStack?.filter(t => t.trim() !== '') || []
+      features: editingProject.features?.filter(f => typeof f === 'string' && f.trim() !== '') || [],
+      techStack: editingProject.techStack?.filter(t => typeof t === 'string' && t.trim() !== '') || []
     };
-    await axiosInstance.put(`/projects/${editingProject._id}`, payload);
+    if (editingProject._id) {
+      await axiosInstance.put(`/projects/${editingProject._id}`, payload);
+    } else {
+      await axiosInstance.post('/projects', payload);
+    }
     setEditingProject(null);
     fetchData();
   };
 
   const saveCard = async (e) => {
     e.preventDefault();
-    await axiosInstance.put(`/home-cards/${editingCard._id}`, editingCard);
+    if (editingCard._id) {
+      await axiosInstance.put(`/home-cards/${editingCard._id}`, editingCard);
+    } else {
+      await axiosInstance.post('/home-cards', editingCard);
+    }
     setEditingCard(null);
     fetchData();
   };
@@ -99,7 +107,7 @@ export default function AdminDashboard() {
         {/* --- EDIT CARD MODAL/FORM --- */}
         {editingCard && (
           <div className="bg-white/10 p-6 rounded-xl border border-white/20 mb-8">
-            <h2 className="text-xl font-bold mb-4">Edit Home Card</h2>
+            <h2 className="text-xl font-bold mb-4">{editingCard._id ? 'Edit Home Card' : 'Add Home Card'}</h2>
             <form onSubmit={saveCard} className="space-y-4">
               <input className="w-full bg-black/50 border border-white/20 p-3 rounded" value={editingCard.title} onChange={e => setEditingCard({...editingCard, title: e.target.value})} placeholder="Title" />
               <input className="w-full bg-black/50 border border-white/20 p-3 rounded" value={editingCard.img} onChange={e => setEditingCard({...editingCard, img: e.target.value})} placeholder="Image URL" />
@@ -114,7 +122,7 @@ export default function AdminDashboard() {
         {/* --- EDIT PROJECT MODAL/FORM --- */}
         {editingProject && (
           <div className="bg-white/10 p-6 rounded-xl border border-white/20 mb-8">
-            <h2 className="text-xl font-bold mb-4">Edit Project</h2>
+            <h2 className="text-xl font-bold mb-4">{editingProject._id ? 'Edit Project' : 'Add Project'}</h2>
             <form onSubmit={saveProject} className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input className="w-full bg-black/50 border border-white/20 p-3 rounded" value={editingProject.title} onChange={e => setEditingProject({...editingProject, title: e.target.value})} placeholder="Title" />
               <input className="w-full bg-black/50 border border-white/20 p-3 rounded" value={editingProject.year} onChange={e => setEditingProject({...editingProject, year: e.target.value})} placeholder="Year" />
@@ -146,7 +154,15 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* HOME CARDS LIST */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-            <h2 className="text-2xl font-bold mb-4 text-yellow-300">Home Cards</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-yellow-300">Home Cards</h2>
+              <button 
+                onClick={() => setEditingCard({ title: '', img: '' })} 
+                className="bg-green-500/20 text-green-400 px-4 py-1.5 rounded hover:bg-green-500/40 text-sm font-semibold"
+              >
+                + Add Card
+              </button>
+            </div>
             <div className="space-y-4">
               {homeCards.map(card => (
                 <div key={card._id} className="flex justify-between items-center bg-black/50 p-4 rounded border border-white/10">
@@ -165,7 +181,19 @@ export default function AdminDashboard() {
 
           {/* PROJECTS LIST */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-            <h2 className="text-2xl font-bold mb-4 text-yellow-300">Projects</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-yellow-300">Projects</h2>
+              <button 
+                onClick={() => setEditingProject({ 
+                  title: '', year: '', tags: '', number: '', imgSrc: '', 
+                  description: '', githubLink: '', websiteLink: '', 
+                  features: [], techStack: [] 
+                })} 
+                className="bg-green-500/20 text-green-400 px-4 py-1.5 rounded hover:bg-green-500/40 text-sm font-semibold"
+              >
+                + Add Project
+              </button>
+            </div>
             <div className="space-y-4">
               {projects.map(proj => (
                 <div key={proj._id} className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-black/50 p-4 rounded border border-white/10 gap-4">

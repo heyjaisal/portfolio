@@ -13,7 +13,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full bg-black text-white font-inter md:h-screen overflow-y-auto flex flex-col pt-20">
+    <div className="w-full bg-black text-white font-inter min-h-screen overflow-y-auto flex flex-col pt-20">
     
       <section className="grid grid-cols-1 md:grid-cols-2 shrink-0 md:grow-0 min-h-[200px] md:min-h-[25vh] items-center">
         <div className="flex items-center justify-center px-6">
@@ -54,8 +54,8 @@ export default function Home() {
       </section>
 
     
-      <footer className="bg-black text-gray-400 text-sm px-6 py-4 border-t border-white/10 flex justify-between items-center shrink-0 mt-auto">
-        <div className="flex space-x-6">
+      <footer className="bg-black text-gray-400 text-sm px-6 py-4 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 shrink-0 mt-auto">
+        <div className="flex flex-wrap justify-center sm:justify-start space-x-4 sm:space-x-6">
           {[
             { name: "GitHub", url: "https://github.com/heyjaisal", external: true },
             {

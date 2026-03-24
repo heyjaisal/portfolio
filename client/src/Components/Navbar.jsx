@@ -77,17 +77,16 @@ export default function Navbar() {
       </div>
 
       {isOpen && (
-        <div className={`md:hidden absolute top-16 left-0 w-full backdrop-blur-3xl px-4 pb-4 pt-6 space-y-4 z-40 ${isDarkTheme ? "bg-black/90 text-white" : "bg-gray-500 text-white"}  `}>
-          <Link to="/projects" onClick={() => setIsOpen(false)} className="block hover:text-yellow-300">
+        <div className={`md:hidden absolute top-16 left-0 w-full h-[calc(100vh-4rem)] backdrop-blur-3xl px-6 py-12 flex flex-col items-center gap-y-8 z-40 ${isDarkTheme ? "bg-black/95 text-white" : "bg-white/95 text-black"}`}>
+          <Link to="/projects" onClick={() => setIsOpen(false)} className="text-xl font-medium tracking-widest hover:text-yellow-400 transition-colors">
             SELECTED WORKS
           </Link>
-          <Link to="/about" onClick={() => setIsOpen(false)} className="block hover:text-yellow-300">
+          <Link to="/about" onClick={() => setIsOpen(false)} className="text-xl font-medium tracking-widest hover:text-yellow-400 transition-colors">
             ABOUT ME
           </Link>
-          
           <a
             href={RESUME_LINK}
-            className="block hover:text-yellow-300"
+            className="text-xl font-medium tracking-widest hover:text-yellow-400 transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -95,7 +94,7 @@ export default function Navbar() {
           </a>
           <Link
             to="/contact"
-            className=" block hover:text-yellow-300"
+            className="text-xl font-medium tracking-widest hover:text-yellow-400 transition-colors mt-auto mb-10 border border-current px-6 py-2 rounded-full"
             onClick={() => setIsOpen(false)}
           >
             WORK WITH ME ↗

@@ -19,11 +19,11 @@ export default function ProjectDetails() {
 
   return (
     <div>
-      <h1 className="text-black font-poppins text-4xl lg:text-6xl px-10 lg:px-28 flex flex-col items-center justify-center pt-20">
+      <h1 className="text-black font-poppins text-4xl lg:text-6xl px-6 sm:px-10 lg:px-28 flex flex-col items-center justify-center pt-20 text-center">
         {project.title}
       </h1>
 
-      <hr className="border-t border-gray-300 mx-10 sm:mx-16 md:mx-20 my-4" />
+      <hr className="border-t border-gray-300 mx-6 sm:mx-10 md:mx-20 my-4" />
 
       <div className="w-full overflow-hidden">
         <img
@@ -33,14 +33,14 @@ export default function ProjectDetails() {
         />
       </div>
 
-      <div className="text-neutral-700 font-medium font-poppins sm:text-base px-10 lg:px-28 leading-relaxed space-y-4">
+      <div className="text-neutral-700 font-medium font-poppins sm:text-base px-6 sm:px-10 lg:px-28 leading-relaxed space-y-4">
         <p>{project.description}</p>
       </div>
 
       <div className="text-black font-poppins text-3xl lg:text-5xl px-7 lg:px-16 my-10">
         Features
       </div>
-      <div className="text-neutral-700 font-medium font-poppins sm:text-base px-10 lg:px-28 leading-relaxed space-y-4">
+      <div className="text-neutral-700 font-medium font-poppins sm:text-base px-6 sm:px-10 lg:px-28 leading-relaxed space-y-4">
         <ul className="list-disc pl-5 space-y-2">
           {project.features.map((f, i) => (
             <li key={i}>{f}</li>
@@ -51,7 +51,7 @@ export default function ProjectDetails() {
       <div className="text-black font-poppins text-3xl lg:text-5xl px-7 lg:px-16 my-10">
         Tech Stack
       </div>
-      <div className="text-neutral-700 font-medium font-poppins sm:text-base px-10 lg:px-28 leading-relaxed space-y-4 mb-10">
+      <div className="text-neutral-700 font-medium font-poppins sm:text-base px-6 sm:px-10 lg:px-28 leading-relaxed space-y-4 mb-10">
         <ul className="list-disc pl-5 space-y-2">
           {project.techStack.map((t, i) => (
             <li key={i}>{t}</li>
@@ -59,7 +59,7 @@ export default function ProjectDetails() {
         </ul>
       </div>
 
-      <div className="flex justify-center gap-6 mt-8 mb-5 px-10">
+      <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mt-8 mb-5 px-6 sm:px-10">
   <a
     href={project.githubLink}
     target="_blank"

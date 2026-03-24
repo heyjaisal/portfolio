@@ -9,7 +9,7 @@ const AboutHeader = () => {
     <div className="w-full font-inter relative z-20 overflow-x-hidden">
       <div className="relative z-30 bg-white">
      
-        <div className="flex flex-col-reverse lg:flex-row pt-16 px-10 sm:px-16 md:px-20 items-start">
+        <div className="flex flex-col-reverse lg:flex-row pt-16 px-6 sm:px-16 md:px-20 items-start">
           <div className="lg:ml-[10rem] lg:max-w-[50%]">
             <img src={Profile} alt="Profile" />
             <h1 className="font-semibold font-poppins text-black text-[clamp(2.5rem,6vw,4.5rem)] lg:text-5xl mt-6">
@@ -23,7 +23,7 @@ const AboutHeader = () => {
         </div>
 
        
-        <div className="flex justify-between px-5 sm:px-16 md:px-10 mt-4 pb-5">
+        <div className="flex justify-between px-6 sm:px-16 md:px-10 mt-4 pb-5">
           <IoMdArrowDown className="w-15 h-15 md:w-20 md:h-20 text-neutral-600 items-start mt-8" />
           <div className="flex items-start gap-2 max-w-[12rem] md:max-w-[18rem] text-right">
             <p className="text-sm sm:text-base text-neutral-700 leading-snug">
@@ -34,7 +34,7 @@ const AboutHeader = () => {
           </div>
         </div>
 
-        <hr className="border-t border-gray-300 mx-10 sm:mx-16 md:mx-20 my-4" />
+        <hr className="border-t border-gray-300 mx-6 sm:mx-16 md:mx-20 my-4" />
 
         
       </div>

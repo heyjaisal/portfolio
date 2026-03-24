@@ -24,11 +24,11 @@ const rightSkills = skills.slice(mid);
 
   return (
     <div>
-      <section className="px-10 sm:px-16 md:px-20">
-        <hr className="border-t border-gray-300 mx-10 sm:mx-16 md:mx-20 my-4" />
+      <section className="px-6 sm:px-16 md:px-20">
+        <hr className="border-t border-gray-300 mx-6 sm:mx-16 md:mx-20 my-4" />
         <div className="grid grid-cols-1 lg:grid-cols-[45%_1fr] gap-10">
           <div className="relative h-full flex justify-center lg:justify-end">
-            <div className="lg:block sticky top-24 self-start w-full">
+            <div className="relative lg:sticky top-0 lg:top-24 mb-8 lg:mb-0 self-start w-full">
               <div
                 className="w-full"
                 style={{ width: "100%", maxWidth: "100%" }}

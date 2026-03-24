@@ -4,7 +4,7 @@ import HomePage from "../assets/last.png";
 export default function Aboutscroll() {
   return (
     <div className="mb-10">
-      <section className="px-10 sm:px-16 md:px-20">
+      <section className="px-6 sm:px-16 md:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-[45%_1fr] gap-10">
           <div className="relative h-full flex justify-center lg:justify-end">
             <div className="hidden lg:block sticky top-24 self-start w-full">
@@ -50,7 +50,7 @@ export default function Aboutscroll() {
               </p>
             </div>
 
-<div className="text-xs sm:text-sm text-gray-500 ml-35 py-5 ">
+<div className="text-xs sm:text-sm text-gray-500 ml-6 md:ml-12 py-5 ">
    
     <div className="border-l-4 border-yellow-400 pl-4 space-y-2 ">
       <p className="font-semibold text-black">
